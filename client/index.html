@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        var myHeaders = new Headers();
+        myHeaders.append("Origin", "http://localhost:8085");
+        // myHeaders.append('Content-Type', 'application/json');
+        
+        var myInit = { 
+            method: 'GET',
+            headers: myHeaders,
+            mode: 'cors',
+            credentials: 'include',
+            cache: "no-cache",
+        };
+
+        fetch('http://localhost:80', myInit).then(data => {
+            if (data.ok) {
+                console.log(`cookie: ${window.document.cookie}`);
+                console.log(`headers: ${data.headers}`)
+                for (var pair of data.headers.entries()) {
+                    console.log(pair[0]+ ': '+ pair[1]);
+                }
+            }
+            console.log(JSON.stringify(data.headers.entries(), null, 2));
+        }).catch(error=>{
+            console.error(JSON.stringify(error, null, 2));
+        })
+        fetch('http://localhost:80/test', myInit).then(data => {
+            if (data.ok) {
+                console.log(`cookie: ${window.document.cookie}`);
+                console.log(`headers: ${data.headers}`)
+                for (var pair of data.headers.entries()) {
+                    console.log(pair[0]+ ': '+ pair[1]);
+                }
+            }
+            console.log(JSON.stringify(data.headers.entries(), null, 2));
+        }).catch(error=>{
+            console.error(JSON.stringify(error, null, 2));
+        })
+    </script>
+</body>
+</html>
